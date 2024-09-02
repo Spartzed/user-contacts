@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -24,6 +25,11 @@ class AuthController extends Controller
     public function showForgotPasswordForm()
     {
         return view('auth.forgot-password');
+    }
+
+    public function showRestPasswordForm()
+    {
+        return view('auth.reset-password');
     }
 
     public function register(Request $request)
@@ -55,18 +61,16 @@ class AuthController extends Controller
             'email' => 'required|string|email',
             'password' => 'required|string',
         ]);
-
-        $user = User::where('email', $request->email)->first();
-
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
-            ]);
+    
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            $request->session()->regenerate();
+    
+            return redirect()->intended('contacts');
         }
-
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        return response()->json(['access_token' => $token, 'token_type' => 'Bearer']);
+    
+        return back()->withErrors([
+            'email' => 'Email ou senha incorretos.',
+        ])->onlyInput('email');
     }
 
     public function forgotPassword(Request $request)
@@ -102,5 +106,29 @@ class AuthController extends Controller
         return $status === Password::PASSWORD_RESET
             ? response()->json(['message' => __($status)])
             : response()->json(['email' => [__($status)]], 422);
+    }
+
+    public function destroy(Request $request)
+    {
+        $user = Auth::user();
+    
+        if (!Hash::check($request->password, $user->password)) {
+            return redirect()->back()->withErrors(['password' => 'Senha incorreta.']);
+        }
+    
+        $user->delete();
+    
+        return redirect()->route('login')->with('success', 'Conta excluída com sucesso!');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::guard('web')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 }

@@ -16,8 +16,12 @@ return new class extends Migration
             $table->string('name');
             $table->string('cpf')->unique();
             $table->string('phone');
-            $table->string('address');
+            $table->string('logradouro');
+            $table->string('numero');
             $table->string('cep');
+            $table->string('bairro');
+            $table->string('cidade');
+            $table->string('uf');
             $table->decimal('latitude', 10, 7);
             $table->decimal('longitude', 10, 7);
             $table->timestamps();

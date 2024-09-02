@@ -12,7 +12,7 @@
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
         </div>
-        <button type="submit">Resetar Senha</button>
+        <button type="submit">Enviar Link de Recuperação</button>
     </form>
     <a href="{{ route('login') }}">Login</a>
 </body>
