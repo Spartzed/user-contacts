@@ -55,7 +55,7 @@
 
     <div id="map" style="height: 500px; width: 100%;"></div>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAaa_Vmxvv2qvNNHp2PB4zXwyKasMxFzcE&callback=initMap" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&callback=initMap" async defer></script>
     <script>
         let map;
         let markers = [];

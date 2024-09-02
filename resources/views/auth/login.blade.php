@@ -36,6 +36,6 @@
         <button type="submit">Login</button>
     </form>
     <a href="{{ route('register') }}">Registrar</a>
-    <a href="{{ route('forgot-password') }}">Esqueceu a Senha?</a>
+    <a href="{{ route('password.request') }}">Esqueceu a Senha?</a>
 </body>
 </html>
