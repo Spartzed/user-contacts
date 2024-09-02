@@ -76,7 +76,7 @@ class ContactController extends Controller
             'key' => $googleMapsApiKey,
         ]);
         
-        if ($response->failed()) {
+        if ($response->failed() || empty($response->json()['results'])) {
             return redirect()->back()->withErrors(['address' => 'Não foi possível obter a localização.'])->withInput();
         }
         
@@ -137,7 +137,7 @@ class ContactController extends Controller
             'key' => $googleMapsApiKey,
         ]);
 
-        if ($response->failed()) {
+        if ($response->failed() || empty($response->json()['results'])) {
             return redirect()->back()->withErrors(['address' => 'Não foi possível obter a localização.'])->withInput();
         }
 
