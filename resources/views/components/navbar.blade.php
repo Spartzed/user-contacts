@@ -1,9 +1,13 @@
 <div class="navbar">
-    <a href="{{ url('/contacts') }}">Home</a>
+    <a href="{{ url('/contacts') }}">
+        <img src="{{ asset('images/left.svg') }}" alt="Retornar">
+        Home
+    </a>
     @auth
         <a href="{{ route('logout') }}" class="right"
            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-            Logout
+           Logout
+           <img src="{{ asset('images/logout.svg') }}" alt="Sair">
         </a>
         <a href="#" class="right" id="delete-account-btn">
             Excluir Conta

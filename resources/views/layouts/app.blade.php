@@ -15,16 +15,28 @@
 
         .navbar a {
             float: left;
-            display: block;
+            display: flex;
+            align-items: center;
             color: #f2f2f2;
             text-align: center;
             padding: 14px 16px;
             text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .navbar a img {
+            width: 15px;
+            height: 15px;
+            margin-right: 5px;
+            margin-left: 5px;
         }
 
         .navbar a:hover {
-            background-color: #ddd;
-            color: black;
+            background-color: #007bff;
+        }
+
+        #delete-account-btn:hover {
+            background-color: #ff0000;
         }
 
         .navbar .right {
