@@ -65,13 +65,45 @@
     <script>
         let map;
         let markers = [];
-
+    
         function initMap() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const userLocation = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+                        map = new google.maps.Map(document.getElementById('map'), {
+                            center: userLocation,
+                            zoom: 12
+                        });
+
+                        @foreach ($contacts as $contact)
+                            var marker = new google.maps.Marker({
+                                position: {lat: {{ $contact->latitude }}, lng: {{ $contact->longitude }}},
+                                map: map,
+                                title: '{{ $contact->name }}'
+                            });
+                            markers.push(marker);
+                        @endforeach
+                        centralizarMapa(userLocation.lat, userLocation.lng);
+                    },
+                    () => {
+                        initMapWithFixedLocation();
+                    }
+                );
+            } else {
+                initMapWithFixedLocation();
+            }
+        }
+    
+        function initMapWithFixedLocation() {
             map = new google.maps.Map(document.getElementById('map'), {
                 center: {lat: -25.4284, lng: -49.2733},
                 zoom: 12
             });
-
+    
             @foreach ($contacts as $contact)
                 var marker = new google.maps.Marker({
                     position: {lat: {{ $contact->latitude }}, lng: {{ $contact->longitude }}},
@@ -81,7 +113,7 @@
                 markers.push(marker);
             @endforeach
         }
-
+    
         function centralizarMapa(lat, lng) {
             map.setCenter({lat: lat, lng: lng});
             map.setZoom(15);
