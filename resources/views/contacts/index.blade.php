@@ -14,21 +14,24 @@
         </div>
     @endif
 
-    <h2>Contatos</h2>
+    <h1>Contatos</h1>
 
     <div class="main-container">
         <div class="left-panel">
             <form method="GET" action="{{ route('contacts.index') }}">
-                <div class="form-group">
-                    <label for="search">Buscar por Nome ou CPF:</label>
-                    <input type="text" id="search" name="search" value="{{ request('search') }}">
-                    <button type="submit" class="search-button">
-                        <img src="{{ asset('images/search-icon.png') }}" alt="Buscar">
-                    </button>
+                <div class="form-group search-name">
+                    <label for="search">Buscar por nome ou CPF:</label>
+                    <div class="input-content">
+                        <input type="text" id="search" name="search" value="{{ request('search') }}" placeholder="Digite o nome ou CPF">
+                        <button type="submit" class="search-button">
+                            <img src="{{ asset('images/search.svg') }}" alt="Buscar">
+                            Buscar
+                        </button>
+                    </div>
                 </div>
             </form>
-            <button onclick="window.location.href='{{ route('contacts.create') }}'">Criar Contato</button>
 
+            <button onclick="window.location.href='{{ route('contacts.create') }}'" class="create-button">Criar contato</button>
             <table>
                 <thead>
                     <tr>
@@ -61,7 +64,7 @@
         <div id="map" class="right-panel"></div>
     </div>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&callback=initMap" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpAyFtAASJ7X3sl43jydvD_8YobTjRtzk&callback=initMap" async defer></script>
     <script>
         let map;
         let markers = [];
@@ -89,6 +92,9 @@
     </script>
 
     <style>
+        h1 {
+            padding: 20px 0px 0px 20px;
+        }
         .main-container {
             display: flex;
             height: 100vh;
@@ -113,17 +119,41 @@
             border: 1px solid #ccc;
             border-radius: 4px;
         }
+        .form-group.search-name {
+            align-items: stretch;
+            flex-direction: column
+        }
+        .form-group .input-content {
+            display: flex;
+        }
+
         .search-button {
-            background: none;
+            padding: 10px;
+            background-color: #007bff;
             border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 16px;
             cursor: pointer;
             margin-left: 10px;
-            width: 40px;
+            display: flex;
+            align-items: center;
         }
+
+        .search-button:hover {
+            background-color: #0056b3;
+        }
+
         .search-button img {
-            width: 20px;
-            height: 20px;
+            width: 15px;
+            height: 15px;
+            margin-right: 5px;
         }
+
+        .create-button {
+            margin-top: 20px;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
