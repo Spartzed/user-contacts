@@ -52,7 +52,7 @@
                                 <form method="POST" action="{{ route('contacts.destroy', $contact->id) }}" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" onclick="return confirm('Tem certeza que deseja excluir este contato?')">Excluir</button>
+                                    <button type="submit" class="btn-delete" onclick="return confirm('Tem certeza que deseja excluir este contato?')">Excluir</button>
                                 </form>
                             </td>
                         </tr>
@@ -63,8 +63,15 @@
 
         <div id="map" class="right-panel"></div>
     </div>
+    <script>
+        var googleApiKey = "{{ env('GOOGLE_MAPS_API_KEY') }}";
+        var script = document.createElement('script');
+        script.src = "https://maps.googleapis.com/maps/api/js?key=" + googleApiKey + "&callback=initMap";
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+    </script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpAyFtAASJ7X3sl43jydvD_8YobTjRtzk&callback=initMap" async defer></script>
     <script>
         let map;
         let markers = [];
@@ -172,6 +179,10 @@
             align-items: center;
         }
 
+        .btn-delete {
+            background-color: #ff0000;
+        }
+
         .search-button:hover {
             background-color: #0056b3;
         }
@@ -184,6 +195,7 @@
 
         .create-button {
             margin-top: 20px;
+            background-color: #00af03; 
         }
 
         table {

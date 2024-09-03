@@ -189,6 +189,7 @@
         border-radius: 4px;
         cursor: pointer;
         text-align: center;
+        width: 98%;
     }
 
     .btn:hover {

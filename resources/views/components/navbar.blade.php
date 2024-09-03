@@ -9,7 +9,7 @@
            Logout
            <img src="{{ asset('images/logout.svg') }}" alt="Sair">
         </a>
-        <a href="#" class="right" id="delete-account-btn">
+        <a href="#" class="delete-btn right" id="delete-account-btn">
             Excluir Conta
         </a>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

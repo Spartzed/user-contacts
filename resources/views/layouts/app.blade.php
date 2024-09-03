@@ -61,7 +61,7 @@
             margin: 15% auto;
             padding: 20px;
             border: 1px solid #888;
-            width: 80%;
+            width: 40%;
         }
 
         .close {
@@ -76,6 +76,11 @@
             color: black;
             text-decoration: none;
             cursor: pointer;
+        }
+
+        .btn-modal {
+            margin-top: 10px;
+            background-color: #ff0000
         }
     </style>
 </head>
@@ -94,8 +99,8 @@
                     @method('DELETE')
                     <label for="password">Digite sua senha:</label>
                     <input type="password" id="password" name="password" required>
-                    <button type="submit">Confirmar</button>
                 </form>
+                <button class="btn-modal" type="submit">Deletar</button>
             </div>
         </div>
 
@@ -106,7 +111,6 @@
             var span = document.getElementsByClassName("close")[0];
 
             btn.onclick = function (event) {
-                console.log('xxx', "????c");
                 event.preventDefault();
                 modal.style.display = "block";
             }
