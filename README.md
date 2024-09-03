@@ -1,7 +1,3 @@
-# User Contacts
-
-!GitHub repo size
-
 ## Descrição
 
 O projeto **User Contacts** é uma aplicação para gerenciar contatos de usuários. Ele permite adicionar, editar, visualizar e excluir contatos de forma simples e eficiente, permitindo ver a localização através do Mapa da Google.
