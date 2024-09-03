@@ -10,13 +10,16 @@ Route::get('/', function () {
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
-Route::get('/forgot-password', [AuthController::class, 'showForgotPasswordForm'])->name('forgot-password');
-Route::get('/reset-password/{token}', [AuthController::class, 'showRestPasswordForm'])->name('reset-password');
+
+Route::get('/forgot-password', [AuthController::class, 'showForgotPasswordForm'])->name('password.request');
+Route::get('/reset-password/{token}', [AuthController::class, 'showRestPasswordForm'])->name('password.reset');
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
-Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
-Route::post('/reset-password', [AuthController::class, 'resetPassword']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])->name('password.email');
+Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
 
 Route::delete('/account/delete', [AuthController::class, 'destroy'])->name('account.delete')->middleware('auth');
 

@@ -3,8 +3,9 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Models\User;
+use Faker\Provider\pt_BR\Person;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -16,6 +17,8 @@ class UserFactory extends Factory
      */
     protected static ?string $password;
 
+    protected $model = User::class;
+
     /**
      * Define the model's default state.
      *
@@ -23,12 +26,15 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $this->faker->addProvider(new Person($this->faker));
+
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'name' => $this->faker->name,
+            'email' => $this->faker->unique()->safeEmail,
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            'password' => bcrypt('password'),
             'remember_token' => Str::random(10),
+            'cpf' => $this->faker->cpf(false),
         ];
     }
 

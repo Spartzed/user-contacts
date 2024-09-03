@@ -27,9 +27,11 @@ class AuthController extends Controller
         return view('auth.forgot-password');
     }
 
-    public function showRestPasswordForm()
+    public function showRestPasswordForm(Request $request, $token = null)
     {
-        return view('auth.reset-password');
+        return view('auth.reset-password')->with(
+            ['token' => $token, 'email' => $request->email]
+        );
     }
 
     public function register(Request $request)
@@ -76,14 +78,14 @@ class AuthController extends Controller
     public function forgotPassword(Request $request)
     {
         $request->validate(['email' => 'required|email']);
-
+    
         $status = Password::sendResetLink(
             $request->only('email')
         );
-
+    
         return $status === Password::RESET_LINK_SENT
-            ? response()->json(['message' => __($status)])
-            : response()->json(['email' => __($status)], 422);
+            ? back()->with(['status' => __($status)])
+            : back()->withErrors(['email' => __($status)]);
     }
 
     public function resetPassword(Request $request)
@@ -93,7 +95,7 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required|string|min:8|confirmed',
         ]);
-
+    
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user, $password) {
@@ -102,11 +104,11 @@ class AuthController extends Controller
                 ])->save();
             }
         );
-
+    
         return $status === Password::PASSWORD_RESET
-            ? response()->json(['message' => __($status)])
-            : response()->json(['email' => [__($status)]], 422);
-    }
+            ? redirect()->route('login')->with('status', __('Sua senha foi resetada!'))
+            : back()->withErrors(['email' => [__($status)]]);
+    }    
 
     public function destroy(Request $request)
     {
