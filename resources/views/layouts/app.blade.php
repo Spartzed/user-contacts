@@ -6,7 +6,7 @@
     <style>
         .navbar {
             overflow: hidden;
-            background-color: #333;
+            background-color: #010099;
             position: fixed;
             top: 0;
             width: 100%;
